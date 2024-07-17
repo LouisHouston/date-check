@@ -4,6 +4,7 @@
   "description": "A web application for asynchronously checking if a date works amongst community.",
   "main": "index.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
