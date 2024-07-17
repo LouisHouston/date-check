@@ -1,0 +1,26 @@
+{
+  "name": "date-check",
+  "version": "1.0.0",
+  "description": "A web application for asynchronously checking if a date works amongst community.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LouisHouston/date-check.git"
+  },
+  "keywords": [
+    "Date",
+    "Checker"
+  ],
+  "author": "Louis Houston",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LouisHouston/date-check/issues"
+  },
+  "homepage": "https://github.com/LouisHouston/date-check#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
