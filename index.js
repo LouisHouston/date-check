@@ -1,17 +1,26 @@
 require('dotenv').config();
 const express = require('express');
-const { Client } = require('pg');
+//const { Client } = require('pg'); how to connect to db
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+const path = require('path');
+
+
+app.set('view engine', 'ejs');
+
+app.set('views', path.join(__dirname, 'public\\views'));
+
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+    res.render('index', { title: 'Date Checker', message: 'check?' });
+  });
+
 
 app.listen(port, () => {
-  console.log(`Try Me!`);
+    console.log(`Server is running on PORT:${port}`);
 });
-
+/* Use for DB connection later on
 const client = new Client(process.env.DATABASE_URL);
 
 (async () => {
@@ -24,4 +33,5 @@ const client = new Client(process.env.DATABASE_URL);
   } finally {
     client.end();
   }
-})();
+})(); 
+*/
