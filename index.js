@@ -20,6 +20,8 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
     console.log(`Server is running on PORT:${port}`);
 });
+
+
 /* Use for DB connection later on
 const client = new Client(process.env.DATABASE_URL);
 
