@@ -1,5 +1,6 @@
 // January 1st is a Monday or a 1
 
+
 function isLeapYear(year) { // this was a quiz in class not tooooo long ago im not that old!
     return (year % 4 === 0 && year % 100 !== 0) || (year % 400 === 0);
 }
@@ -61,49 +62,38 @@ function getMonthDays(year) {
 
 
 function calendarDates() {
-    var startingYear = 2020
-    var isLeapYear = false;
-    const date = new Date();
-    var fire = date.toLocaleDateString(); //this is how we'll get the date
-    var water = date.getDay();
-    console.log("Ordinal Date: " + getOrdinalDate(date)) // so right now this is how we are going to calculate the ordinal date and thus off this date we can assign Days based on what day it is either from start or from behind
-    
-    
+    const today = new Date();
+    const currentYear = today.getFullYear();
+    const currentMonth = today.getMonth(); 
+    const currentDay = today.getDate();
+    const monthNames = Object.keys(getMonthDays(currentYear));
+    const daysInMonth = getMonthDays(currentYear)[monthNames[currentMonth]];
+    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+    const calendarDiv = document.getElementById('calendar');
 
-    console.log("The current day is :" + (1 + (getOrdinalDate(date)-1)) % 7) // only way i can think of to get the current day of the week everytime and from here we can build the calendar!
-    /* 
-    so lets say July 1 is Monday which is represented by a 1
-    so if we get a string like date.LocalDate is 7/30/2024 we want to know what day it is
-    based off the first day of the year pretty simple but lets just figuyre out what day 
-    it is based off the number in the same month
-    so July 1 is a Monday which is a 1 
-    I am mkaing this comment July 30th which is a Tuesday which is a 2
-    therefore (currentdateday = 30 - first day number (1) ) % 6 = current day?????
-    Lets test!
+    calendarDiv.style.display = 'grid';
+    calendarDiv.style.gridTemplateColumns = 'repeat(7, 1fr)';
 
-    June 1st is a saturday whiuch is a 6(saturday) if its the 15th then
-    15th - 6 = 9 % 6 = 3 which is a wednesday 
+    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    daysOfWeek.forEach(day => {
+        const dayHeader = document.createElement('div');
+        dayHeader.innerText = day;
+        calendarDiv.appendChild(dayHeader);
+    });
 
-    that didnt work 1 + 7 which is a week + 7 which is a week = 15th it shouldve been the same day
-    but that gives us a hint~!
-
-    what if we do June 1st is a 6 if its a 15 - 1 % 7 = 0 + first day (6) = 6 SATURDAY
-
-    so by that logic June 1st is a 6(saturday) then lets try June 19th -1 = 18 % 7 = 4 + first day = 10 % 6 = 4 june 19th is a Thurs!
-
-    okay...that didnt work either
-
-    May   20th may starts on a wedneday which is 3 0 sun 1 mon 2 tues 3 wed, now we can do 
-    3 (start day) + 20 - 1 (for the current day) % 7 some sort of arrange of this makes the currentd ay
-    22 % 7 = 1 which is a monday so the 20th of may is a monday 
-
-
-    */
-    if (startingYear % 400 == 0){
-        isLeapYear = true;
+    for (let i = 0; i < firstDay; i++) {
+        const emptyDiv = document.createElement('div');
+        calendarDiv.appendChild(emptyDiv);
     }
 
-
+    for (let day = 1; day <= daysInMonth; day++) {
+        const dayButton = document.createElement('button');
+        dayButton.innerText = day;
+        dayButton.onclick = function() {
+            alert(`You clicked on ${currentMonth + 1}/${day}/${currentYear}`);
+        };
+        calendarDiv.appendChild(dayButton);
+    }
 }
 
 
