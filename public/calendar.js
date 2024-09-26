@@ -6,7 +6,7 @@ class CustomDate{
         this.month = today.getMonth();
         this.day = today.getDay();
         this.year = today.getFullYear();
-        }else{
+        }else{ // this is like a constructor
             this.month = month;
             this.day = day;
             this.year = year;
