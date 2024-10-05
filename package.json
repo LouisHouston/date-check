@@ -13,9 +13,13 @@
     "url": "git+https://github.com/LouisHouston/date-check.git"
   },
   "nodemonConfig": {
-    "watch": ["src"],
+    "watch": [
+      "src"
+    ],
     "ext": "js,json",
-    "ignore": ["node_modules"],
+    "ignore": [
+      "node_modules"
+    ],
     "exec": "node --inspect index.js"
   },
   "keywords": [
@@ -32,6 +36,7 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "express-session": "^1.18.0",
     "nodemon": "^3.1.4",
     "pg": "^8.12.0"
   }

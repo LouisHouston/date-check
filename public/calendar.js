@@ -133,29 +133,63 @@ function calendarDates(date) {
 
      for (let day = 1; day <= daysInMonth; day++) {
         const dayButton = document.createElement('button');
+       
+        const startingDate = customUser.getStartingDate();
+        const endingDate = customUser.getEndingDate();
+
         dayButton.classList = "button-6";
         dayButton.innerText = day;
+        if (startingDate.getDay <=day  && endingDate.getDay() >= day) {
+            dayButton.classList = "button-6-clicked";
+            console.log("WORKINGG")
+        }
         dayButton.onclick = () => {
             const selectedDate = new CustomDate(currentMonth + 1, day, currentYear);
             customUser.storeDate(selectedDate);
-            console.log('Selected Date (Not formatted)', selectedDate);
+            clearHighlights();
+
+            const startingDate = customUser.getStartingDate();
+            const endingDate = customUser.getEndingDate();
+
+            if (startingDate && endingDate) {
+                highlightRange(startingDate, endingDate, currentYear, currentMonth);
+            }
 
             const formattedDate = `${currentMonth + 1}/${day}/${currentYear}`;
-            console.log('Selected Date:', formattedDate);
-
-            console.log('Starting Date:', customUser.getStartingDate().getDate());
-            console.log('Ending Date:', customUser.getEndingDate()?.getDate());
             dayButton.classList = "button-6-clicked";
         };
         calendarDiv.appendChild(dayButton);
     }
+
+    function clearHighlights() {
+        const buttons = calendarDiv.getElementsByTagName('button');
+        for (let button of buttons) {
+            button.classList.remove('button-6-clicked');
+        }
+    }
+
+    function highlightRange(startingDate, endingDate, currentYear, currentMonth) {
+        const buttons = calendarDiv.getElementsByTagName('button');
+    
+        const start = new Date(startingDate.year, startingDate.month - 1, startingDate.day).getTime();
+        const end = new Date(endingDate.year, endingDate.month - 1, endingDate.day).getTime();
+    
+        for (let button of buttons) {
+            const day = parseInt(button.innerText);
+            const currentDate = new Date(currentYear, currentMonth, day).getTime();
+    
+            if (currentDate >= start && currentDate <= end) {
+                button.classList.add('button-6-clicked');
+            }
+        }
+    }
 }
+
 
 document.getElementById("decrementMonth").addEventListener("click",decrementMonth);
 
 function decrementMonth(){
     currentWorkingDate.decrementMonth();
-    console.log("Month decremented", currentWorkingDate)
     calendarDates(currentWorkingDate);
 }
 
@@ -163,6 +197,5 @@ document.getElementById("incrementMonth").addEventListener("click",incrementMont
 
 function incrementMonth(){
     currentWorkingDate.incrementMonth();
-    console.log("Month incremented")
     calendarDates(currentWorkingDate);
 }
