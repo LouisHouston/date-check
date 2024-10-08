@@ -30,18 +30,19 @@ function generateGroupID(){
   return result;
 }
 
-// this is the call for creating the actual groupID and link well the link is generated from the random code and then use the template
-// template ejs so its like group/blahblah
+// this is the function where we would insert the group into the database
 app.post('/create-group', (req,res) =>{
   const groupID = generateGroupID();
-  res.redirect(`/group/${groupID}`);
+  const groupName = req.body.name;
+  console.log(groupName);
+  res.redirect(`/group/${groupID}?name=${encodeURIComponent(groupName)}`);
 })
 
-// then we need an actual place to go with the redirect
-// this will use the group i just need  the group naem too
+// this is the function to check if the group exists in the DB and to prep the members on what to do 
 app.get('/group/:groupID', (req, res) =>{
   const groupID = req.params.groupID;
-  res.render('group', { groupID });
+  const groupName = req.query.name;
+  res.render('group', { groupID, groupName });
 })
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
