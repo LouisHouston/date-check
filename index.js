@@ -15,42 +15,36 @@ app.use(session({
   }
 }))
 
+//to break down the form from the creategroup submission form on the groupForm page
+app.use(express.urlencoded({ extended: true }));
 
 // ~~~~~~~~~   This whole thing for generating new links and groups ~~~~~~~~~~~~~~~~~
 // just a random generator of 4 chars
 function generateGroupID(){
   let result = '';
   const characters = 'asdfghjklzxcvbnmqwertyuiop1234567890';
-
+  
   for (let i = 0; i < 4; i++){
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
-
   return result;
 }
 
-// this is the call for creating the actual groupID and link 
-app.get('/create-group', (res,req) =>{
+// this is the call for creating the actual groupID and link well the link is generated from the random code and then use the template
+// template ejs so its like group/blahblah
+app.post('/create-group', (req,res) =>{
   const groupID = generateGroupID();
-  res.redirect('/group/${groupID}');
+  res.redirect(`/group/${groupID}`);
 })
 
 // then we need an actual place to go with the redirect
-
+// this will use the group i just need  the group naem too
 app.get('/group/:groupID', (req, res) =>{
   const groupID = req.params.groupID;
-  res.render('group', {groupID});
+  res.render('group', { groupID });
 })
 
-
-
-
-
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 app.set('view engine', 'ejs');
 
 app.set('views', path.join(__dirname, 'public', "views"));
@@ -60,8 +54,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
     res.render('index.ejs', { title: 'Date Checker', message: 'check?' });
   });
-
-
 
 // just seeing if this works
 app.get('/sessioncheck', (req, res) => {
@@ -73,8 +65,6 @@ app.get('/sessioncheck', (req, res) => {
       res.send(`You have visited this site ${req.session.views} times.`);
     }
   });
-
-
 
 app.listen(port, () => {
     console.log(`Server is running on PORT:${port}`);
