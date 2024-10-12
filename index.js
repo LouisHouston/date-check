@@ -12,7 +12,7 @@ app.use(session({
   saveUninitialized: true,
   cookie:{
     maxAge: 24 * 7 * 60 * 60 * 1000
-  }
+  },
 }))
 
 //to break down the form from the creategroup submission form on the groupForm page
@@ -56,14 +56,15 @@ app.get('/', (req, res) => {
     res.render('index.ejs', { title: 'Date Checker', message: 'check?' });
   });
 
-// just seeing if this works
 app.get('/sessioncheck', (req, res) => {
     if (!req.session.views) {
       req.session.views = 1;
       res.send('Welcome to the site!');
+      req.write(uid);
     } else {
       req.session.views++;
       res.send(`You have visited this site ${req.session.views} times.`);
+      res.send(`Your session ID ${req.session.uid}`);
     }
   });
 
