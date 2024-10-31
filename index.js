@@ -19,8 +19,6 @@ app.use(cookieparser());
     console.log("connected")
   } catch (err) {
     console.error("error executing query:", err);
-  } finally {
-    client.end();
   }
 })(); 
 
@@ -72,8 +70,10 @@ function generateGroupID(String){
         console.error('Error inserting group into database:', error);
         return res.status(500).send('Server error');
       }
+      else{
+        console.log("Group Added Successfully");
+      }
     })
-
   return result;
 }
 
